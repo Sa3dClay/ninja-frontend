@@ -6,6 +6,7 @@ const WorkoutForm = () => {
     const [title, setTitle] = useState("");
     const [reps, setReps] = useState("");
     const [load, setLoad] = useState("");
+    const [emptyFields, setEmptyFields] = useState([]);
 
     const { dispatch } = uesWorkoutsContext();
 
@@ -32,10 +33,10 @@ const WorkoutForm = () => {
 
         if (!response.ok) {
             setError(json.error);
+            setEmptyFields(json.emptyFields);
         } else {
             setError(null);
-
-            console.log("Workout Added", json);
+            setEmptyFields([]);
 
             dispatch({
                 type: "CREATE_WORKOUT",
@@ -57,8 +58,7 @@ const WorkoutForm = () => {
                 type="text"
                 onChange={(e) => setTitle(e.target.value)}
                 value={title}
-                min="0"
-                max="100"
+                className={emptyFields && emptyFields.includes("title") ? 'error' : ''}
             />
 
             <label>Repeats:</label>
@@ -68,6 +68,7 @@ const WorkoutForm = () => {
                 value={reps}
                 min="0"
                 max="100"
+                className={emptyFields && emptyFields.includes("reps") ? 'error' : ''}
             />
 
             <label>Load (in Kg):</label>
@@ -77,6 +78,7 @@ const WorkoutForm = () => {
                 value={load}
                 min="0"
                 max="100"
+                className={emptyFields && emptyFields.includes("load") ? 'error' : ''}
             />
 
             <button>Add Workout</button>
