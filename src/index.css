@@ -99,6 +99,7 @@ div.error {
     border: 1px solid var(--error);
     color: var(--error);
     border-radius: 4px;
+    text-align: center;
     margin: 20px 0;
 }
 
@@ -109,6 +110,16 @@ nav {
 }
 nav a {
     margin-left: 10px;
+}
+nav button {
+    background: #fff;
+    color: var(--error);
+    border: 2px solid var(--error);
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-family: "Poppins";
+    cursor: pointer;
+    font-size: 1em;
 }
 /* auth forms */
 form.signup,
