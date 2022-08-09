@@ -1,9 +1,9 @@
-import { uesWorkoutsContext } from "../../hooks/useWorkoutsContext";
+import { useWorkoutsContext } from "../../hooks/useWorkoutsContext";
 import { useEffect } from "react";
 import Workout from "./Workout";
 
 const Workouts = () => {
-    const { workouts, dispatch } = uesWorkoutsContext();
+    const { workouts, dispatch } = useWorkoutsContext();
 
     useEffect(() => {
         const fetchWorkouts = async () => {

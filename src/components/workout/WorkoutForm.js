@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { uesWorkoutsContext } from "../../hooks/useWorkoutsContext";
+import { useWorkoutsContext } from "../../hooks/useWorkoutsContext";
 
 const WorkoutForm = () => {
     const [error, setError] = useState(null);
@@ -8,7 +8,7 @@ const WorkoutForm = () => {
     const [load, setLoad] = useState("");
     const [emptyFields, setEmptyFields] = useState([]);
 
-    const { dispatch } = uesWorkoutsContext();
+    const { dispatch } = useWorkoutsContext();
 
     const resetForm = () => {
         setTitle("");

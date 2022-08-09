@@ -1,8 +1,8 @@
-import { uesWorkoutsContext } from "../../hooks/useWorkoutsContext";
+import { useWorkoutsContext } from "../../hooks/useWorkoutsContext";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 const Workout = ({ workout }) => {
-    const { dispatch } = uesWorkoutsContext();
+    const { dispatch } = useWorkoutsContext();
 
     const handleDelete = async () => {
         const response = await fetch("/api/workouts/" + workout._id, {
