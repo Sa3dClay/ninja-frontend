@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuthContext } from "../../hooks/useAuthContext";
 import { useWorkoutsContext } from "../../hooks/useWorkoutsContext";
 
 const WorkoutForm = () => {
@@ -9,6 +10,7 @@ const WorkoutForm = () => {
     const [emptyFields, setEmptyFields] = useState([]);
 
     const { dispatch } = useWorkoutsContext();
+    const { user } = useAuthContext();
 
     const resetForm = () => {
         setTitle("");
@@ -19,6 +21,11 @@ const WorkoutForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!user) {
+            setError("You must be logged in!");
+            return;
+        }
+
         const workout = { title, reps, load };
 
         const response = await fetch("/api/workouts", {
@@ -26,6 +33,7 @@ const WorkoutForm = () => {
             body: JSON.stringify(workout),
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${user.token}`,
             },
         });
 
@@ -58,7 +66,7 @@ const WorkoutForm = () => {
                 type="text"
                 onChange={(e) => setTitle(e.target.value)}
                 value={title}
-                className={emptyFields && emptyFields.includes("title") ? 'error' : ''}
+                className={emptyFields && emptyFields.includes("title") ? "error" : ""}
             />
 
             <label>Repeats:</label>
@@ -68,7 +76,7 @@ const WorkoutForm = () => {
                 value={reps}
                 min="0"
                 max="100"
-                className={emptyFields && emptyFields.includes("reps") ? 'error' : ''}
+                className={emptyFields && emptyFields.includes("reps") ? "error" : ""}
             />
 
             <label>Load (in Kg):</label>
@@ -78,7 +86,7 @@ const WorkoutForm = () => {
                 value={load}
                 min="0"
                 max="100"
-                className={emptyFields && emptyFields.includes("load") ? 'error' : ''}
+                className={emptyFields && emptyFields.includes("load") ? "error" : ""}
             />
 
             <button>Add Workout</button>
