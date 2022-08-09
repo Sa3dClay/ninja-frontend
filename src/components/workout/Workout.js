@@ -43,7 +43,9 @@ const Workout = ({ workout }) => {
                     })}
                 </i>
             </p>
-            <span onClick={handleDelete}>delete</span>
+            <span className="material-symbols-outlined" onClick={handleDelete}>
+                delete
+            </span>
         </div>
     );
 };
