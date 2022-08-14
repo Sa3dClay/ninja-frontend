@@ -18,6 +18,10 @@ const WorkoutForm = () => {
         setLoad("");
     };
 
+    const handleOnBlur = (event, field) => {
+        if (!event.target.value) setError(field + " can't be empty");
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -64,7 +68,11 @@ const WorkoutForm = () => {
             <label>Exercise:</label>
             <input
                 type="text"
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => {
+                    setTitle(e.target.value);
+                    setError(null);
+                }}
+                onBlur={(e) => handleOnBlur(e, "Exercise")}
                 value={title}
                 className={emptyFields && emptyFields.includes("title") ? "error" : ""}
             />
@@ -72,7 +80,11 @@ const WorkoutForm = () => {
             <label>Repeats:</label>
             <input
                 type="number"
-                onChange={(e) => setReps(e.target.value)}
+                onChange={(e) => {
+                    setReps(e.target.value);
+                    setError(null);
+                }}
+                onBlur={(e) => handleOnBlur(e, "Reps")}
                 value={reps}
                 min="0"
                 max="100"
@@ -82,7 +94,11 @@ const WorkoutForm = () => {
             <label>Load (in Kg):</label>
             <input
                 type="number"
-                onChange={(e) => setLoad(e.target.value)}
+                onChange={(e) => {
+                    setLoad(e.target.value);
+                    setError(null);
+                }}
+                onBlur={(e) => handleOnBlur(e, "Load")}
                 value={load}
                 min="0"
                 max="100"
