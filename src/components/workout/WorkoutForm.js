@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { uesWorkoutsContext } from "../../hooks/useWorkoutsContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { useWorkoutsContext } from "../../hooks/useWorkoutsContext";
 
 const WorkoutForm = () => {
     const [error, setError] = useState(null);
@@ -8,7 +9,8 @@ const WorkoutForm = () => {
     const [load, setLoad] = useState("");
     const [emptyFields, setEmptyFields] = useState([]);
 
-    const { dispatch } = uesWorkoutsContext();
+    const { dispatch } = useWorkoutsContext();
+    const { user } = useAuthContext();
 
     const resetForm = () => {
         setTitle("");
@@ -16,8 +18,17 @@ const WorkoutForm = () => {
         setLoad("");
     };
 
+    const handleOnBlur = (event, field) => {
+        if (!event.target.value) setError(field + " can't be empty");
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!user) {
+            setError("You must be logged in!");
+            return;
+        }
 
         const workout = { title, reps, load };
 
@@ -26,6 +37,7 @@ const WorkoutForm = () => {
             body: JSON.stringify(workout),
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${user.token}`,
             },
         });
 
@@ -56,29 +68,41 @@ const WorkoutForm = () => {
             <label>Exercise:</label>
             <input
                 type="text"
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => {
+                    setTitle(e.target.value);
+                    setError(null);
+                }}
+                onBlur={(e) => handleOnBlur(e, "Exercise")}
                 value={title}
-                className={emptyFields && emptyFields.includes("title") ? 'error' : ''}
+                className={emptyFields && emptyFields.includes("title") ? "error" : ""}
             />
 
             <label>Repeats:</label>
             <input
                 type="number"
-                onChange={(e) => setReps(e.target.value)}
+                onChange={(e) => {
+                    setReps(e.target.value);
+                    setError(null);
+                }}
+                onBlur={(e) => handleOnBlur(e, "Reps")}
                 value={reps}
                 min="0"
                 max="100"
-                className={emptyFields && emptyFields.includes("reps") ? 'error' : ''}
+                className={emptyFields && emptyFields.includes("reps") ? "error" : ""}
             />
 
             <label>Load (in Kg):</label>
             <input
                 type="number"
-                onChange={(e) => setLoad(e.target.value)}
+                onChange={(e) => {
+                    setLoad(e.target.value);
+                    setError(null);
+                }}
+                onBlur={(e) => handleOnBlur(e, "Load")}
                 value={load}
                 min="0"
                 max="100"
-                className={emptyFields && emptyFields.includes("load") ? 'error' : ''}
+                className={emptyFields && emptyFields.includes("load") ? "error" : ""}
             />
 
             <button>Add Workout</button>

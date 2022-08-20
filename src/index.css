@@ -7,12 +7,12 @@
     --error: #e7195a;
 }
 body {
-    background: #f1f1f1;
+    background-color: #f1f1f1;
     margin: 0;
     font-family: "Poppins";
 }
 header {
-    background: #fff;
+    background-color: #fff;
 }
 header .container {
     max-width: 1400px;
@@ -39,7 +39,7 @@ header a {
     gap: 100px;
 }
 .workout-details {
-    background: #fff;
+    background-color: #fff;
     border-radius: 4px;
     margin: 20px auto;
     padding: 20px;
@@ -61,10 +61,14 @@ header a {
     top: 20px;
     right: 20px;
     cursor: pointer;
-    background: var(--error);
-    padding: 8px 10px;
-    border-radius: 0.2rem;
+    background-color: #aaa;
+    border-radius: 50%;
+    padding: 8px;
     color: white;
+    transition: 0.3s;
+}
+.workout-details span:hover {
+    background-color: var(--error);
 }
 
 /* new workout form */
@@ -85,7 +89,7 @@ input.error {
     border: 1px solid var(--error);
 }
 form button {
-    background: var(--primary);
+    background-color: var(--primary);
     border: 0;
     color: #fff;
     padding: 10px;
@@ -95,9 +99,46 @@ form button {
 }
 div.error {
     padding: 10px;
-    background: #ffefef;
+    background-color: #ffefef;
     border: 1px solid var(--error);
     color: var(--error);
     border-radius: 4px;
+    text-align: center;
     margin: 20px 0;
+}
+
+/* navbar */
+nav {
+    display: flex;
+    align-items: center;
+}
+nav a {
+    margin-left: 10px;
+}
+nav span {
+    font-size: large;
+    margin-right: 10px;
+    color: #AAA;
+}
+nav button {
+    background-color: #fff;
+    color: var(--error);
+    border: 2px solid var(--error);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: "Poppins";
+    cursor: pointer;
+    font-size: 1em;
+}
+/* auth forms */
+form.signup,
+form.login {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 4px;
+}
+form h2 {
+    color: #444;
 }

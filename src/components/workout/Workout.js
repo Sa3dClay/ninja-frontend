@@ -1,12 +1,19 @@
-import { uesWorkoutsContext } from "../../hooks/useWorkoutsContext";
+import { useWorkoutsContext } from "../../hooks/useWorkoutsContext";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const Workout = ({ workout }) => {
-    const { dispatch } = uesWorkoutsContext();
+    const { dispatch } = useWorkoutsContext();
+    const { user } = useAuthContext();
 
     const handleDelete = async () => {
+        if (!user) return;
+
         const response = await fetch("/api/workouts/" + workout._id, {
             method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+            },
         });
         const json = await response.json();
 
@@ -36,7 +43,9 @@ const Workout = ({ workout }) => {
                     })}
                 </i>
             </p>
-            <span onClick={handleDelete}>delete</span>
+            <span className="material-symbols-outlined" onClick={handleDelete}>
+                delete
+            </span>
         </div>
     );
 };
